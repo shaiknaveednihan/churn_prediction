@@ -81,10 +81,12 @@ def train_and_register_model():
             mlflow.log_artifact(preprocessor_path, artifact_path="preprocessing_pipeline")
 
         print("[INFO] Pushing model to MLflow Registry...")
+
         mlflow.sklearn.log_model(
             sk_model=model,
             name="random_forest_model",
             registered_model_name=config["registry"]["model_name"],
+            skops_trusted_types=["sklearn.tree._tree.Tree"],
         )
 
         print(
